@@ -105,14 +105,18 @@ static int	file_is_valid(char *s)
 	int count;
 
 	count = 1;
-	while (*s)
+	if (ft_strlen(s) + 1 > 546)
+		return (0);
+	while (s[1])
 	{
-		if (count % 5 == 0 && *s == '\n')
+		if (count % 5 == 0 && *s != '\n')
 			return (0);
 		else if (count % 20 == 0)
 		{
-			if (*s != '\n' || s[1] != '\n')
+			if ((*s != '\n' || s[1] != '\n') && s[1] != '\0')
 				return (0);
+			s += 2;
+			count = 1;
 		}
 		else if (*s != '.' && *s != '#' && *s != '\n')
 			return (0);
@@ -130,7 +134,7 @@ char		***init(char *fn)
 	in = ft_open(fn);
 	if (!in)
 		return (NULL);
-	if ((ft_strlen(in) + 1) % 21 != 0 || file_is_valid(in))
+	if (!file_is_valid(in) || (ft_strlen(in) + 1) % 21 != 0)
 	{
 		free(in);
 		return (NULL);

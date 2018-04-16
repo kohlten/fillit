@@ -21,7 +21,7 @@ static int	ft_error(void)
 int			main(int argc, char **argv)
 {
 	char	***buf;
-	t_board	*solved;
+	t_board	*board;
 	int		i;
 
 	if (argc != 2)
@@ -32,15 +32,15 @@ int			main(int argc, char **argv)
 	if (!(buf = init(argv[1])))
 		return (ft_error());
 	buf = prepare(buf);
-	solved = solve_board(buf);
+	board = solve_board(buf);
 	i = 0;
-	while (i < solved->current_size)
-		invalid_print(solved->board[i++], solved->current_size);
+	while (i < SIZE)
+		invalid_print(BOARD[i++], SIZE);
 	free_3d_array((void ***)buf);
 	i = 0;
-	while (solved->board[i])
-		free(solved->board[i++]);
-	free(solved->board);
-	free(solved);
+	while (BOARD[i])
+		free(BOARD[i++]);
+	free(BOARD);
+	free(board);
 	return (0);
 }

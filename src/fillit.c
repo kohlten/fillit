@@ -86,19 +86,19 @@ static int		solve(t_board *board, char ***tets, int current)
 	if (!tets[current])
 		return (1);
 	curr.y = -1;
-	while (board->board[++curr.y])
+	while (BOARD[++curr.y])
 	{
 		curr.x = -1;
-		while (board->board[curr.y][++curr.x])
+		while (BOARD[curr.y][++curr.x])
 		{
 			pos = copy_point(&curr);
-			if (possible(board->board, tets[current], board->current_size, pos))
+			if (possible(BOARD, tets[current], SIZE, pos))
 			{
-				board->board = place(tets[current], board->board, pos,
+				BOARD = place(tets[current], BOARD, pos,
 					'A' + current);
 				if (solve(board, tets, current + 1) == 1)
 					return (1);
-				board->board = place(tets[current], board->board, pos, '.');
+				BOARD = place(tets[current], BOARD, pos, '.');
 			}
 			free(pos);
 		}
@@ -118,16 +118,16 @@ t_board			*solve_board(char ***tets)
 		len++;
 	board = ft_memalloc(sizeof(t_board));
 	board->size = len * 4;
-	board->current_size = 2;
-	board->board = big_board_gen(board->size);
+	SIZE = 2;
+	BOARD = big_board_gen(board->size);
 	while (1)
 	{
 		current = 0;
 		output = solve(board, tets, current);
 		if (output != 1)
 		{
-			board->current_size++;
-			board->board = board_del(board->board, board->current_size);
+			SIZE++;
+			BOARD = board_del(BOARD, SIZE);
 		}
 		else
 			break ;

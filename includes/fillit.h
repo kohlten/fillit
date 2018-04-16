@@ -14,6 +14,8 @@
 # define FILLIT_H
 # include "libft.h"
 # define BLOCK_SIZE 1024
+# define BOARD board->board
+# define SIZE board->current_size
 
 typedef struct	s_board
 {
